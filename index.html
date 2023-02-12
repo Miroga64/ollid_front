@@ -1,11 +1,28 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
+    <script
+        src="https://code.jquery.com/jquery-3.6.3.js"
+        integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+        crossorigin="anonymous"></script>
   </head>
   <body>
-    <form method="POST" action="http://127.0.0.1:3000/getFile/" enctype="multipart/form-data">
+    <form id="form" method="POST" action="http://127.0.0.1:3000/getFile/" enctype="multipart/form-data">
         <p><input type="file" name="file" id="file"></p>
         <p><input type="submit" value="Submit"></p>
     </form>
   </body>
+  <script>
+    $('#form').submit(function(e) {
+        e.preventDefault();
+        const data = new FormData();
+        data.append('file', $('#file')[0].files[0]);
+        fetch('http://127.0.0.1:3000/getFile/', {
+            method: 'POST',
+            body: data,
+        })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err))
+    });
+  </script>
 </html>
